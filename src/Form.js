@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import * as Yup from "yup";
+import Axios from 'axios';
 
 const formSchema = Yup.object().shape({
   name: Yup
@@ -70,7 +71,9 @@ export default function Form (props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(JSON.stringify(form, null, 2));
+    Axios.post('https://reqres.in/api/pizza', form).then((res) => {
+      console.log(res.data);
+    });
     setForm(initialState);
   }
 
