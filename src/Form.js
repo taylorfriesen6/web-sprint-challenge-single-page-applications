@@ -68,8 +68,14 @@ export default function Form (props) {
     });
   }, [form]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert(JSON.stringify(form, null, 2));
+    setForm(initialState);
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <p>
         <label>
           Name: <input type='text' name='name' value={form.name} onChange={handleChange}/>
