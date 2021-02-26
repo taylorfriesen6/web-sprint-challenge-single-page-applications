@@ -8,6 +8,7 @@ export default function Form (props) {
     mushrooms: false,
     peppers: false,
     pineapple: false,
+    instructions: '',
   };
 
   const handleChange = (e) => {
@@ -48,6 +49,12 @@ export default function Form (props) {
         </label>
         <label>
           <input type='checkbox' name='pineapple' checked={form.pineapple} onChange={handleChange}/>Pineapple
+        </label>
+      </p>
+      <p>
+        <label>
+          Special Instructions:<br/>
+          <textarea name='instructions' value={form.instructions} onChange={handleChange}></textarea>
         </label>
       </p>
     </form>
