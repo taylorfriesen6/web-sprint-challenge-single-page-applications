@@ -73,8 +73,8 @@ export default function Form (props) {
     e.preventDefault();
     Axios.post('https://reqres.in/api/pizza', form).then((res) => {
       console.log(res.data);
-    });
-    setForm(initialState);
+      setForm(initialState);
+    }).catch(_ => alert('Could not submit order'));
   }
 
   return (
