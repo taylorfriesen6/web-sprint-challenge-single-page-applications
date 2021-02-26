@@ -1,4 +1,17 @@
 import React, {useState, useEffect} from "react";
+import * as Yup from "yup";
+
+const formSchema = Yup.object().shape({
+  name: Yup
+    .string()
+    .min(2, 'Name must be at least two characters'),
+  size: Yup.string(),
+  pepperoni: Yup.boolean(),
+  mushrooms: Yup.boolean(),
+  peppers: Yup.boolean(),
+  pineapple: Yup.boolean(),
+  instructions: Yup.string(),
+});
 
 export default function Form (props) {
   const initialState = {
@@ -11,20 +24,49 @@ export default function Form (props) {
     instructions: '',
   };
 
+  const [form, setForm] = useState(initialState);
+
+  const [errors, setErrors] = useState({
+    name: '',
+    size: '',
+    pepperoni: '',
+    mushrooms: '',
+    peppers: '',
+    pineapple: '',
+    instructions: '',
+  });
+
   const handleChange = (e) => {
     const { name, type, value, checked } = e.target;
     const updatedInfo = type === 'checkbox' ? checked : value;
     setForm({ ...form, [name]: updatedInfo });
+
+    Yup
+      .reach(formSchema, name)
+      //we can then run validate using the value
+      .validate(updatedInfo)
+      // if the validation is successful, we can clear the error message
+      .then(valid => {
+        setErrors({
+          ...errors, [name]: ""
+        });
+      })
+      // if the validation is unsuccessful, we can set the error message to the message
+      // returned from yup (that we created in our schema)
+      .catch(err => {
+        setErrors({
+          ...errors, [name]: err.errors[0]
+        });
+      });
   }
 
-
-  const [form, setForm] = useState(initialState);
   return (
     <form>
       <p>
         <label>
           Name: <input type='text' name='name' value={form.name} onChange={handleChange}/>
         </label>
+        <span className='error'>{errors.name}</span>
       </p>
       <p>
         <label>
