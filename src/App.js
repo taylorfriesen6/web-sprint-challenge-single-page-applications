@@ -1,6 +1,8 @@
 import React from "react";
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 
+import Form from './Form'
+
 const App = () => {
   return (
     <Router>
@@ -9,9 +11,8 @@ const App = () => {
         <Link to='/'>Home</Link>
         <Link to='/pizza'>Pizza</Link>
       </nav>
-      <p>You can remove this code and create your own header</p>
       <Switch>
-        <Route path='/pizza'>pizza</Route>
+        <Route path='/pizza'><Form /></Route>
         <Route path='/'>home</Route>
       </Switch>
     </Router>
