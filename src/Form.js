@@ -36,6 +36,8 @@ export default function Form (props) {
     instructions: '',
   });
 
+  const [disabled, setDisabled] = useState(true);
+
   const handleChange = (e) => {
     const { name, type, value, checked } = e.target;
     const updatedInfo = type === 'checkbox' ? checked : value;
@@ -59,6 +61,12 @@ export default function Form (props) {
         });
       });
   }
+
+  useEffect(() => {
+    formSchema.isValid(form).then(valid => {
+      setDisabled(!valid);
+    });
+  }, [form]);
 
   return (
     <form>
@@ -98,6 +106,9 @@ export default function Form (props) {
           Special Instructions:<br/>
           <textarea name='instructions' value={form.instructions} onChange={handleChange}></textarea>
         </label>
+      </p>
+      <p>
+        <input type='submit' value='Add to Order' disabled={disabled}/>
       </p>
     </form>
   );
